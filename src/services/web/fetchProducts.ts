@@ -1,3 +1,4 @@
+import { BASE_URL_API } from '@/lib/constants';
 import { Product } from '@/types';
 import axios from 'axios';
 
@@ -8,7 +9,7 @@ export async function fetchProducts({
 }): Promise<Product[]> {
   try {
     const { data } = await axios.get(
-      `http://localhost:3000/api/items?${new URLSearchParams({
+      `${BASE_URL_API}/items?${new URLSearchParams({
         q: search ?? '',
       })}`
     );

@@ -1,3 +1,4 @@
+import { BASE_URL_API } from '@/lib/constants';
 import { Product } from '@/types';
 import axios from 'axios';
 
@@ -7,7 +8,7 @@ export async function fetchProductById({
   id: string;
 }): Promise<Product> {
   try {
-    const { data } = await axios.get(`http://localhost:3000/api/items/${id}`);
+    const { data } = await axios.get(`${BASE_URL_API}/api/items/${id}`);
 
     return data.data;
   } catch (error) {
