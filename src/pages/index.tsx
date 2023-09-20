@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SearchIcon } from 'lucide-react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -39,7 +40,7 @@ export default function Home() {
   }
   return (
     <main className="flex justify-center items-center min-h-screen max-w-md px-6 lg:px-8 mx-auto">
-      <section className="w-full">
+      <section className="w-full flex justify-center flex-col items-center">
         <div className="mb-8">
           <h1 className="text-5xl font-extrabold">Bazar Online</h1>
         </div>
@@ -47,7 +48,7 @@ export default function Home() {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 flex justify-center flex-col"
+            className="space-y-4 flex max-w-md w-full justify-center flex-col"
           >
             <FormField
               control={form.control}
@@ -55,11 +56,17 @@ export default function Home() {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      autoComplete="off"
-                      placeholder="Buscador de productos"
-                      {...field}
-                    />
+                    <div className="relative">
+                      <Input
+                        autoComplete="off"
+                        placeholder="Buscador de productos... (samsung, iPhone, etc)"
+                        {...field}
+                      ></Input>
+                      <SearchIcon
+                        onClick={form.handleSubmit(onSubmit)}
+                        className="absolute right-2 top-2 cursor-pointer"
+                      />
+                    </div>
                   </FormControl>
                 </FormItem>
               )}

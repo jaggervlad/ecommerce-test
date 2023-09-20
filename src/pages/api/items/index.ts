@@ -8,8 +8,9 @@ export default async function handler(
   if (req.method === 'GET') {
     try {
       const search = req.query.q as string;
+      const category = req.query.category as string;
 
-      const data = await getProducts({ search });
+      const data = await getProducts({ search, category });
 
       res.status(200).json({ data, error: null });
     } catch (err) {

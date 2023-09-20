@@ -27,12 +27,18 @@ export default function ItemsPage({
     <Layout>
       <section id="list-of-products" className="pt-6 pb-14 space-y-6">
         <h2 className="text-2xl font-bold">
-          Resultados de búsqueda de &quot;{search}&quot;: {products.length}
+          {search.length > 0 ? (
+            <>
+              Resultados de búsqueda de &quot;{search}&quot;: {products.length}
+            </>
+          ) : (
+            <>Todos los productos: {products.length}</>
+          )}
         </h2>
         <div className="flex gap-2 flex-wrap">
           {categoriesResults.map((c) => (
-            <Badge key={c.name} className="py-2 text-sm">
-              {c.name} - {c.count}
+            <Badge key={c.name} className="py-2 text-sm capitalize">
+              {c.name.split('-').join(' ')} - {c.count}
             </Badge>
           ))}
         </div>
@@ -52,7 +58,9 @@ export default function ItemsPage({
                 </div>
                 <div className="flex flex-col my-4">
                   <CardHeader>
-                    <CardTitle>{p.title}</CardTitle>
+                    <CardTitle>
+                      {p.title} - {p.brand}
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>{p.description}</CardContent>
                   <CardFooter className="flex text-lg justify-between mt-auto">
@@ -77,8 +85,9 @@ export default function ItemsPage({
 
 export const getServerSideProps = (async (context) => {
   const search = (context.query.search as string) ?? '';
+  const category = (context.query.category as string) ?? '';
 
-  const products = await fetchProducts({ search });
+  const products = await fetchProducts({ search, category });
 
   return { props: { products: products ?? [] } };
 }) satisfies GetServerSideProps<{

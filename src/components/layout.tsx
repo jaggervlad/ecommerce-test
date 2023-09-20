@@ -1,12 +1,16 @@
 import { PropsWithChildren } from 'react';
 import { Header } from './header';
+import { Sidebar } from './sidebar';
 
 export function Layout({ children }: PropsWithChildren) {
   return (
-    <main className="max-w-5xl px-6 lg:px-8 mx-auto min-h-screen">
-      <Header />
+    <main className="min-h-screen flex">
+      <Sidebar />
+      <div className="flex flex-col ml-56 flex-1">
+        <Header />
 
-      {children}
+        <div className="px-6 lg:px-8">{children}</div>
+      </div>
     </main>
   );
 }

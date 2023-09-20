@@ -12,6 +12,7 @@ export function SearchForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const search = (searchParams?.get('search') as string) ?? '';
+  const defaultCategory = (searchParams?.get('category') as string) ?? '';
   const form = useForm<z.infer<typeof searchSchema>>({
     // @ts-ignore
     resolver: zodResolver(searchSchema),
@@ -22,21 +23,18 @@ export function SearchForm() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof searchSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
     const { search } = values;
-    console.log('here');
 
     router.push(
       `/items?${new URLSearchParams({
         search: search,
+        category: defaultCategory,
       })}`
     );
-    form.reset();
   }
   return (
     <Form {...form}>
-      <form className="max-w-sm w-full" onSubmit={form.handleSubmit(onSubmit)}>
+      <form className="max-w-xs w-full" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="search"
@@ -45,12 +43,14 @@ export function SearchForm() {
               <FormControl>
                 <div className="relative">
                   <Input
-                    onSubmit={form.handleSubmit(onSubmit)}
                     autoComplete="off"
                     placeholder="Buscador de productos"
                     {...field}
                   ></Input>
-                  <SearchIcon className="absolute right-2 top-2 cursor-pointer" />
+                  <SearchIcon
+                    onClick={form.handleSubmit(onSubmit)}
+                    className="absolute right-2 top-2 cursor-pointer"
+                  />
                 </div>
               </FormControl>
             </FormItem>
