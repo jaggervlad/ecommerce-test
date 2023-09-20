@@ -8,7 +8,7 @@ export async function fetchProductById({
   id: string;
 }): Promise<Product> {
   try {
-    const { data } = await axios.get(`${BASE_URL_API}/api/items/${id}`);
+    const { data } = await axios.get(`${BASE_URL_API}/items/${id}`);
 
     return data.data;
   } catch (error) {
