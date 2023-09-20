@@ -6,12 +6,7 @@ import { defaultSeo } from 'next-seo.config';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem
-      disableTransitionOnChange
-    >
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
       <NextSeo {...defaultSeo} />
       <Component {...pageProps} />
     </ThemeProvider>
